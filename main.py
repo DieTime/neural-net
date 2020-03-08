@@ -1,6 +1,9 @@
-import numpy as np
+from network import Network
 
-a = np.random.random_sample((1, 3))
-b = np.random.random_sample((3, 1))
+a = Network([
+    {"neurons": 3, "activation": "tanh"},
+    {"neurons": 5, "activation": "tanh"},
+    {"neurons": 2, "activation": "softmax"},
+])
 
-print(np.dot(a, b))
+print(a)
