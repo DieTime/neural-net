@@ -1,9 +1,10 @@
 from network import Network
 
 a = Network([
-    {"neurons": 3, "activation": "tanh"},
-    {"neurons": 5, "activation": "tanh"},
-    {"neurons": 2, "activation": "softmax"},
+    Network.input(neurons=3),
+    Network.hidden(neurons=3, activation='tanh'),
+    Network.hidden(neurons=3, activation='tanh'),
+    Network.output(neurons=3, activation='leaky_relu')
 ])
 
-print(a)
+print(a.prediction([1, 0, 1]))
