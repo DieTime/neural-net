@@ -11,4 +11,4 @@ train_data = {
     "output": [[1, 0, 0], [0, 1, 0], [0, 1, 0], [0, 0, 1]]
 }
 
-a.train(train_data["input"], train_data["output"], 5000, 0.1, True)
+a.train(train_data["input"], train_data["output"], 5000, 1, True)
