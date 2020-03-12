@@ -2,18 +2,13 @@ from network import Network
 
 a = Network([
     Network.input(neurons=2),
-    Network.hidden(neurons=3, activation='tanh'),
-    Network.hidden(neurons=3, activation='tanh'),
-    Network.output(neurons=1, activation='sigmoid')
+    Network.hidden(neurons=2, activation='tanh'),
+    Network.output(neurons=3, activation='softmax')
 ])
 
-data_set = {
+train_data = {
     "input": [[0, 0], [0, 1], [1, 0], [1, 1]],
-    "output": [[0], [1], [1], [0]]
+    "output": [[1, 0, 0], [0, 1, 0], [0, 1, 0], [0, 0, 1]]
 }
 
-a.train(data_set['input'], data_set['output'], 10000, 0.02, False)
-print(a.prediction([0, 0]))
-print(a.prediction([0, 1]))
-print(a.prediction([1, 0]))
-print(a.prediction([1, 1]))
+a.train(train_data["input"], train_data["output"], 5000, 0.1, True)
