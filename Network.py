@@ -4,7 +4,7 @@ from tqdm import tqdm
 import matplotlib.pyplot as plot
 
 
-class Network(object):
+class NeuralNet(object):
 
     def __init__(self, setup):
 
@@ -54,7 +54,6 @@ class Network(object):
 
         # Forming the output layer
         for data in self.__weights:
-
             # Remember layer values
             self.__layers.append(np.array(layer))
 
@@ -94,8 +93,8 @@ class Network(object):
             # Updating weights
             self.__weights[i]['matrix'] += delta
 
-        # Return RMSE
-        return np.sqrt(np.sum(np.square(actual - output)) / len(output_data))
+        # Return MSE
+        return np.sum(np.square(actual - output)) / len(output_data)
 
     # Network learning process
     def train(self, input_data, output_data, epochs, lr, shuffle=False):
@@ -120,13 +119,34 @@ class Network(object):
             for j in range_list:
                 error = self.back_propagation(input_data[j], output_data[j], lr)
 
-            progress_bar.set_description("Error:" + '{0:.7f}'.format(error))
+            progress_bar.set_description("Train error:" + '{0:.7f}'.format(error))
             y.append(error)
 
         plot.plot(x, y)
         plot.ylabel('error')
         plot.xlabel('epoch')
         plot.show()
+
+    # Learning test function on the test set
+    def test(self, input_data, output_data):
+        # Initializing progress bar
+        progress_bar = tqdm(range(len(input_data)))
+        # Initializing error
+        error = 0
+
+        # Launching test
+        for i in progress_bar:
+            output = self.prediction(np.array(input_data[i]))
+            error += np.sum(np.square(np.array(output_data[i]) - output)) / len(output_data[i])
+            progress_bar.set_description("Test error: " + '{0:.7f}'.format(error / (i + 1)))
+
+    # Print weights
+    def weights(self):
+        for i in range(len(self.__weights)):
+            print("Weights " + str(i) + "->" + str(i + 1) + ":")
+            print(self.__weights[i]['matrix'])
+            print("Activation:", end='')
+            print("'" + self.__weights[i]['activation'] + "'\n")
 
     # -------------------------- ACTIVATION FUNCTIONS ---------------------------
 
@@ -152,7 +172,7 @@ class Network(object):
 
     @staticmethod
     def softmax(vector):
-        e = np.exp(vector - vector.max())
+        e = np.exp(vector)
         return e / np.sum(e)
 
     @staticmethod
