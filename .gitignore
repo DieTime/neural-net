@@ -1,5 +1,4 @@
-# Virtual environment directory
 venv
-
-# IDE directory
 .idea
+main.py
+
