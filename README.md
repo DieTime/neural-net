@@ -3,7 +3,7 @@
   <img src="https://i.ibb.co/vk7hk8B/NN.png" width="400">
 </p>
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.0.0-black.svg" alt="version">
+  <img src="https://img.shields.io/badge/version-1.0.0-black.svg?style=flat-square" alt="version">
 </p>
 
 ### About
