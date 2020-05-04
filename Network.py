@@ -38,8 +38,11 @@ class NeuralNet(object):
             if not (setup[i]['activation'] in self.functions):
                 raise ValueError('Incorrect activation function!')
 
+            nLeft = setup[i - 1]['neurons']
+            nRight = setup[i]['neurons']
+
             self.__weights.append({
-                'matrix': np.random.random_sample((setup[i - 1]['neurons'] + 1, setup[i]['neurons'])),
+                'matrix': np.random.randn(nLeft + 1, nRight) * np.sqrt(2 / (nLeft + nRight)),
                 'activation': setup[i]['activation'],
             })
 
@@ -74,7 +77,7 @@ class NeuralNet(object):
 
         # Calculating prediction error
         actual = np.array(output_data)
-        error = actual - output
+        error = 2 * (actual - output)
 
         # Back propagation of error
         for i in reversed(range(len(self.__weights))):
@@ -156,10 +159,12 @@ class NeuralNet(object):
 
     @staticmethod
     def sigmoid(x):
+        x = np.clip(x, -500, 500)
         return 1 / (1 + np.exp(-1 * x))
 
     @staticmethod
     def tanh(x):
+        x = np.clip(x, -500, 500)
         return (np.exp(2 * x) - 1) / (np.exp(2 * x) + 1)
 
     @staticmethod
@@ -172,6 +177,7 @@ class NeuralNet(object):
 
     @staticmethod
     def softmax(vector):
+        vector = np.clip(vector, -500, 500)
         e = np.exp(vector)
         return e / np.sum(e)
 
