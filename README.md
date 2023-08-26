@@ -1,4 +1,3 @@
-# NeuralNet
 <p align="center">
   <img src="https://i.ibb.co/vk7hk8B/NN.png" width="400">
 </p>
